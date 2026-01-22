@@ -6,18 +6,17 @@ import os
 from prompt import prompts
 
 
-model_id = "Qwen/Qwen2.5-0.5B-Instruct"
+model_id = "Qwen/Qwen2.5-3B-Instruct"
 
 def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    tokenizer = AutoTokenizer.from_pretrained(model_id, cache_dir="")
+    tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
         torch_dtype=torch.bfloat16,
-        cache_dir="",
         device_map="auto",
-    ).to(device)
+    )
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--output_path", type=str)
@@ -33,7 +32,11 @@ def main():
                 processed_sentences.add(data["id"])
 
     # =========================================== Load Dataset ===========================================
-    with open("./code/qg_variants.jsonl", 'r', encoding='utf-8') as f_in, open(args.output_path, 'a', encoding='utf-8') as f_out:
+    # Use relative path from QG directory
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    input_file = os.path.join(script_dir, "qg_variants.jsonl")
+    
+    with open(input_file, 'r', encoding='utf-8') as f_in, open(args.output_path, 'a', encoding='utf-8') as f_out:
         for line in f_in:
             data = json.loads(line)
             sentence = data.get('en', None)

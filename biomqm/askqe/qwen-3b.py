@@ -1,20 +1,20 @@
 import torch
 import json
 import argparse
+import os
 from prompt import prompts
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 
-model_id = "Qwen/Qwen2.5-0.5B-Instruct"
+model_id = "Qwen/Qwen2.5-3B-Instruct"
 
 def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    tokenizer = AutoTokenizer.from_pretrained(model_id, cache_dir="")
+    tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
         torch_dtype=torch.bfloat16,
-        cache_dir="",
         device_map="auto",
     )
 
@@ -24,7 +24,11 @@ def main():
     args = parser.parse_args()
 
     # =========================================== Load Dataset ===========================================
-    with open("askqe_atomic_facts.jsonl", 'r') as f_in, open(args.output_path, 'a') as f_out:
+    # Use relative path from biomqm/askqe directory
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    input_file = os.path.join(script_dir, "askqe_atomic_facts.jsonl")
+    
+    with open(input_file, 'r', encoding='utf-8') as f_in, open(args.output_path, 'a', encoding='utf-8') as f_out:
         for line in f_in:
             data = json.loads(line)
             sentence = data.get('src', None)

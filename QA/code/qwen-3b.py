@@ -6,13 +6,16 @@ from prompt import qa_prompt
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 
-model_id = "Qwen/Qwen2.5-0.5B-Instruct"
+model_id = "Qwen/Qwen2.5-3B-Instruct"
 
 def load_backtranslations(lang="es"):
     """Load backtranslations from google_translate files and return a dict keyed by id."""
     bt_data = {}
 
-    bt_file = r"C:\Users\andos\DNLP-Project\askqe\backtranslation\en-es\bt-alteration.jsonl"
+    # Use relative path from project root
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(os.path.dirname(script_dir))
+    bt_file = os.path.join(project_root, "backtranslation", f"en-{lang}", "bt-alteration.jsonl")
     
     if os.path.exists(bt_file):
         with open(bt_file, 'r', encoding='utf-8') as f:
@@ -21,8 +24,8 @@ def load_backtranslations(lang="es"):
                 # bt_pert_es is the backtranslation of the perturbed Spanish
                 bt_data[data['id']] = {
                     'source': data.get('en', ''),           # Original English
-                    'bt': data.get('bt_pert_es', ''),       # Backtranslation of perturbed Spanish
-                    'target': data.get('pert_es', '')       # Perturbed Spanish translation
+                    'bt': data.get(f'bt_pert_{lang}', ''),  # Backtranslation of perturbed translation
+                    'target': data.get(f'pert_{lang}', '')  # Perturbed translation
                 }
     else:
         print(f"Warning: Backtranslation file not found: {bt_file}")
@@ -32,13 +35,12 @@ def load_backtranslations(lang="es"):
 def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    tokenizer = AutoTokenizer.from_pretrained(model_id, cache_dir="")
+    tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
         torch_dtype=torch.bfloat16,
-        cache_dir="",
         device_map="auto",
-    ).to(device)
+    )
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--output_path", type=str)
@@ -65,8 +67,15 @@ def main():
     # =========================================== Load Dataset ===========================================
     pipeline_types = ["vanilla"]
 
+    # Use relative path from QA/code directory
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(os.path.dirname(script_dir))
+    
     for pipeline_type in pipeline_types:
-        with open(f"../QG/qwen-0.5b/{pipeline_type}_qwen-0.5b.jsonl", 'r', encoding='utf-8') as f_in, open(f"{args.output_path}-{pipeline_type}.jsonl", 'a', encoding='utf-8') as f_out:
+        qg_file = os.path.join(project_root, "QG", "qwen-3b", f"{pipeline_type}_qwen-3b.jsonl")
+        output_file = f"{args.output_path}-{pipeline_type}.jsonl"
+        
+        with open(qg_file, 'r', encoding='utf-8') as f_in, open(output_file, 'a', encoding='utf-8') as f_out:
             for line in f_in:
                 data = json.loads(line)
                 
