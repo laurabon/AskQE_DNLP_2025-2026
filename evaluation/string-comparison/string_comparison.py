@@ -5,8 +5,12 @@ from utils import compare_answers
 
 nltk.download("punkt")
 
-languages = ["es", "fr", "hi", "tl", "zh"]
-pipelines = ["atomic", "semantic", "vanilla"]
+'''languages = ["es", "fr", "hi", "tl", "zh"]
+pipelines = ["atomic", "semantic", "vanilla"]'''
+
+
+languages = ["es", "fr"]
+pipelines = ["atomic"]
 perturbations = ["synonym", "word_order", "spelling", "expansion_noimpact",
                  "intensifier", "expansion_impact", "omission", "alteration"]
 
@@ -81,7 +85,8 @@ for language in languages:
             except FileNotFoundError as e:
                 print(f"File not found: {e}")
 
-            jsonl_output_file = f"en-{language}/{perturbation}.jsonl"
+            jsonl_output_file = os.path.join(results_dir, "evaluation", "string-comparison", f"en-{language}", f"{perturbation}.jsonl")
+            os.makedirs(os.path.dirname(jsonl_output_file), exist_ok=True)
             with open(jsonl_output_file, "w", encoding="utf-8") as jsonl_file:
-                for row in results_list:
-                    jsonl_file.write(json.dumps(row, ensure_ascii=False) + "\n")
+             for row in results_list:
+                jsonl_file.write(json.dumps(row, ensure_ascii=False) + "\n")

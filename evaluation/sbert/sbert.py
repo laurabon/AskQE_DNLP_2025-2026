@@ -5,6 +5,7 @@ import csv
 import torch
 from transformers import AutoTokenizer, AutoModel
 import torch.nn.functional as F
+import os
 
 
 def mean_pooling(model_output, attention_mask):
@@ -20,10 +21,19 @@ parser.add_argument("--model", type=str, default="qwen-3b")
 parser.add_argument("--output_file", type=str)
 args = parser.parse_args()
 
-languages = ["es", "fr", "hi", "tl", "zh"]
-pipelines = ["atomic", "semantic", "vanilla"]
+'''languages = ["es", "fr", "hi", "tl", "zh"]
+pipelines = ["atomic", "semantic", "vanilla"]'''
+
+languages = ["es", "fr"]
+pipelines = ["atomic"]
+
 perturbations = ["synonym", "word_order", "spelling", "expansion_noimpact",
                  "intensifier", "expansion_impact", "omission", "alteration"]
+
+# Use relative path from script location
+script_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(os.path.dirname(script_dir))
+results_dir = os.path.join(project_root, "results Qwen3B baseline")
 
 tokenizer = AutoTokenizer.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
 model = AutoModel.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
@@ -40,8 +50,8 @@ with open(args.output_file, mode="w", newline="", encoding="utf-8") as csvfile:
                 print("Pipeline: ", pipeline)
                 print("Perturbation: ", perturbation)
 
-                predicted_file = f"../../QA/{args.model}/{language}-{pipeline}-{perturbation}.jsonl"
-                reference_file = f"../../QA/{args.model}/en-{pipeline}.jsonl"
+                predicted_file = os.path.join(results_dir, "QA", "bt", f"{language}-{pipeline}-{perturbation}.jsonl")
+                reference_file = os.path.join(results_dir, "QA", "source", f"en-{pipeline}.jsonl")
 
                 total_cosine_similarity = 0
                 num_comparisons = 0
@@ -112,9 +122,9 @@ with open(args.output_file, mode="w", newline="", encoding="utf-8") as csvfile:
                     print(f"Cosine Similarity: {avg_cosine_similarity:.3f}")
                     print("=" * 80)
 
-                    with open(args.output_file, mode="a", newline="", encoding="utf-8") as csvfile:
-                        csv_writer = csv.writer(csvfile)
-                        csv_writer.writerow([language, perturbation, pipeline, avg_cosine_similarity, num_comparisons])
+                   # with open(args.output_file, mode="a", newline="", encoding="utf-8") as csvfile:
+                    #csv_writer = csv.writer(csvfile)
+                    csv_writer.writerow([language, perturbation, pipeline, avg_cosine_similarity, num_comparisons])
 
                 else:
                     print("No valid comparisons found in the JSONL files.")

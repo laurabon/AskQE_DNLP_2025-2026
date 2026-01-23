@@ -10,8 +10,9 @@ tokenizer = LongformerTokenizer.from_pretrained(model_name)
 model = LongformerForSequenceClassification.from_pretrained(model_name)
 
 
-pipelines = ["atomic", "semantic", "vanilla"]
+#pipelines = ["atomic", "semantic", "vanilla"]
 models = ["qwen-3b"]
+pipelines = ["atomic"]
 
 # Use relative path from script location
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -78,6 +79,8 @@ for pipeline in pipelines:
                 except json.JSONDecodeError as e:
                     print(f"Skipping a corrupted line due to JSONDecodeError: {e}")
                     continue
+        output_file = os.path.join(results_dir, "evaluation", "desiderata", "answerability", f"{pipeline}_{model_name}.jsonl")
+        os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
         with open(output_file, "w", encoding="utf-8") as out_f:
             for entry in processed_data:

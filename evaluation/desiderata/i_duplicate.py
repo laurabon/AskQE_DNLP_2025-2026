@@ -2,8 +2,9 @@ import json
 import os
 
 
-pipelines = ["atomic", "semantic", "vanilla"]
+#pipelines = ["atomic", "semantic", "vanilla"]
 models = ["qwen-3b"]
+pipelines = ["atomic"]
 
 # Use relative path from script location
 script_dir = os.path.dirname(os.path.abspath(__file__))

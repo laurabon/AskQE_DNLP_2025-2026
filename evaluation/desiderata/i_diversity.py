@@ -7,7 +7,9 @@ from sentence_transformers import SentenceTransformer, util
 import bert_score
 
 
-pipelines = ["atomic", "semantic", "vanilla"]
+#pipelines = ["atomic", "semantic", "vanilla"]
+pipelines = ["atomic"]
+
 models = ["qwen-3b"]
 
 # Use relative path from script location
@@ -97,6 +99,9 @@ for pipeline in pipelines:
             "overall_avg_bert_similarity": avg_bert_diversity
         }
         processed_data.append(avg_score_entry)
+
+        output_file = os.path.join(results_dir, "evaluation", "desiderata", "diversity", f"{pipeline}_{model}.jsonl")
+        os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
         with open(output_file, "w", encoding="utf-8") as out_f:
             for entry in processed_data:

@@ -1,7 +1,8 @@
 import json
 import os
 
-pipelines = ["atomic", "semantic", "vanilla"]
+#pipelines = ["atomic", "semantic", "vanilla"]
+pipelines = ["atomic"]
 models = ["qwen-3b"]
 
 # Use relative path from script location
