@@ -4,11 +4,14 @@ import os
 import numpy as np
 from transformers import LongformerTokenizer, LongformerForSequenceClassification
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"Using device: {device}")
 
 model_name = "potsawee/longformer-large-4096-answerable-squad2"
 tokenizer = LongformerTokenizer.from_pretrained(model_name)
 model = LongformerForSequenceClassification.from_pretrained(model_name)
 
+model.to(device)
 
 #pipelines = ["atomic", "semantic", "vanilla"]
 models = ["qwen-3b"]
@@ -58,8 +61,11 @@ for pipeline in pipelines:
 
                     for question in questions:
                         input_text = question + ' ' + tokenizer.sep_token + ' ' + context
-                        inputs = tokenizer(input_text, max_length=4096, truncation=True, return_tensors="pt")
 
+                        inputs = tokenizer(input_text, max_length=4096, truncation=True, return_tensors="pt")
+                        
+                        inputs = {k: v.to(device) for k, v in inputs.items()}
+                        
                         prob = torch.sigmoid(model(**inputs).logits.squeeze(-1))
                         answerability = prob.item() * 100
                         instance_scores.append(answerability)
