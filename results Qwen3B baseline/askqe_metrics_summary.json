@@ -1,0 +1,355 @@
+{
+  "by_perturbation": {
+    "es_spelling": {
+      "language": "es",
+      "pipeline": "atomic",
+      "perturbation": "spelling",
+      "avg_f1": 0.6785728333529689,
+      "avg_em": 0.4289010989010989,
+      "total_questions": 1840,
+      "valid_sentences": 715,
+      "is_critical": false
+    },
+    "es_word_order": {
+      "language": "es",
+      "pipeline": "atomic",
+      "perturbation": "word_order",
+      "avg_f1": 0.6523463274981639,
+      "avg_em": 0.4031259819992214,
+      "total_questions": 1839,
+      "valid_sentences": 710,
+      "is_critical": false
+    },
+    "es_synonym": {
+      "language": "es",
+      "pipeline": "atomic",
+      "perturbation": "synonym",
+      "avg_f1": 0.6594472315181494,
+      "avg_em": 0.412891678958161,
+      "total_questions": 1863,
+      "valid_sentences": 722,
+      "is_critical": false
+    },
+    "es_intensifier": {
+      "language": "es",
+      "pipeline": "atomic",
+      "perturbation": "intensifier",
+      "avg_f1": 0.639235236477946,
+      "avg_em": 0.3776186802353705,
+      "total_questions": 1832,
+      "valid_sentences": 707,
+      "is_critical": false
+    },
+    "es_expansion_noimpact": {
+      "language": "es",
+      "pipeline": "atomic",
+      "perturbation": "expansion_noimpact",
+      "avg_f1": 0.6429676613664953,
+      "avg_em": 0.37968119451170296,
+      "total_questions": 1834,
+      "valid_sentences": 708,
+      "is_critical": false
+    },
+    "es_expansion_impact": {
+      "language": "es",
+      "pipeline": "atomic",
+      "perturbation": "expansion_impact",
+      "avg_f1": 0.6189174085819168,
+      "avg_em": 0.36112479474548437,
+      "total_questions": 1807,
+      "valid_sentences": 696,
+      "is_critical": true
+    },
+    "es_omission": {
+      "language": "es",
+      "pipeline": "atomic",
+      "perturbation": "omission",
+      "avg_f1": 0.5810669412949214,
+      "avg_em": 0.33730451494908475,
+      "total_questions": 1823,
+      "valid_sentences": 709,
+      "is_critical": true
+    },
+    "es_alteration": {
+      "language": "es",
+      "pipeline": "atomic",
+      "perturbation": "alteration",
+      "avg_f1": 0.5370220728575571,
+      "avg_em": 0.29638664440135026,
+      "total_questions": 1717,
+      "valid_sentences": 680,
+      "is_critical": true
+    },
+    "fr_spelling": {
+      "language": "fr",
+      "pipeline": "atomic",
+      "perturbation": "spelling",
+      "avg_f1": 0.6655533445341666,
+      "avg_em": 0.4259266848816029,
+      "total_questions": 1920,
+      "valid_sentences": 732,
+      "is_critical": false
+    },
+    "fr_word_order": {
+      "language": "fr",
+      "pipeline": "atomic",
+      "perturbation": "word_order",
+      "avg_f1": 0.6395374392889966,
+      "avg_em": 0.38899567083999065,
+      "total_questions": 1867,
+      "valid_sentences": 713,
+      "is_critical": false
+    },
+    "fr_synonym": {
+      "language": "fr",
+      "pipeline": "atomic",
+      "perturbation": "synonym",
+      "avg_f1": 0.6389073233043174,
+      "avg_em": 0.3955663856691254,
+      "total_questions": 1904,
+      "valid_sentences": 730,
+      "is_critical": false
+    },
+    "fr_intensifier": {
+      "language": "fr",
+      "pipeline": "atomic",
+      "perturbation": "intensifier",
+      "avg_f1": 0.6366556911309349,
+      "avg_em": 0.3712364307034714,
+      "total_questions": 1852,
+      "valid_sentences": 713,
+      "is_critical": false
+    },
+    "fr_expansion_noimpact": {
+      "language": "fr",
+      "pipeline": "atomic",
+      "perturbation": "expansion_noimpact",
+      "avg_f1": 0.6345489894066721,
+      "avg_em": 0.3708782622284732,
+      "total_questions": 1835,
+      "valid_sentences": 711,
+      "is_critical": false
+    },
+    "fr_expansion_impact": {
+      "language": "fr",
+      "pipeline": "atomic",
+      "perturbation": "expansion_impact",
+      "avg_f1": 0.6084616557043845,
+      "avg_em": 0.34996381670550647,
+      "total_questions": 1889,
+      "valid_sentences": 722,
+      "is_critical": true
+    },
+    "fr_omission": {
+      "language": "fr",
+      "pipeline": "atomic",
+      "perturbation": "omission",
+      "avg_f1": 0.601701058917524,
+      "avg_em": 0.3501331767154552,
+      "total_questions": 1821,
+      "valid_sentences": 711,
+      "is_critical": true
+    },
+    "fr_alteration": {
+      "language": "fr",
+      "pipeline": "atomic",
+      "perturbation": "alteration",
+      "avg_f1": 0.5009678358623103,
+      "avg_em": 0.26773936525761344,
+      "total_questions": 1755,
+      "valid_sentences": 685,
+      "is_critical": true
+    }
+  },
+  "by_language": {
+    "es": {
+      "minor": [
+        {
+          "language": "es",
+          "pipeline": "atomic",
+          "perturbation": "spelling",
+          "avg_f1": 0.6785728333529689,
+          "avg_em": 0.4289010989010989,
+          "total_questions": 1840,
+          "valid_sentences": 715,
+          "is_critical": false
+        },
+        {
+          "language": "es",
+          "pipeline": "atomic",
+          "perturbation": "word_order",
+          "avg_f1": 0.6523463274981639,
+          "avg_em": 0.4031259819992214,
+          "total_questions": 1839,
+          "valid_sentences": 710,
+          "is_critical": false
+        },
+        {
+          "language": "es",
+          "pipeline": "atomic",
+          "perturbation": "synonym",
+          "avg_f1": 0.6594472315181494,
+          "avg_em": 0.412891678958161,
+          "total_questions": 1863,
+          "valid_sentences": 722,
+          "is_critical": false
+        },
+        {
+          "language": "es",
+          "pipeline": "atomic",
+          "perturbation": "intensifier",
+          "avg_f1": 0.639235236477946,
+          "avg_em": 0.3776186802353705,
+          "total_questions": 1832,
+          "valid_sentences": 707,
+          "is_critical": false
+        },
+        {
+          "language": "es",
+          "pipeline": "atomic",
+          "perturbation": "expansion_noimpact",
+          "avg_f1": 0.6429676613664953,
+          "avg_em": 0.37968119451170296,
+          "total_questions": 1834,
+          "valid_sentences": 708,
+          "is_critical": false
+        }
+      ],
+      "critical": [
+        {
+          "language": "es",
+          "pipeline": "atomic",
+          "perturbation": "expansion_impact",
+          "avg_f1": 0.6189174085819168,
+          "avg_em": 0.36112479474548437,
+          "total_questions": 1807,
+          "valid_sentences": 696,
+          "is_critical": true
+        },
+        {
+          "language": "es",
+          "pipeline": "atomic",
+          "perturbation": "omission",
+          "avg_f1": 0.5810669412949214,
+          "avg_em": 0.33730451494908475,
+          "total_questions": 1823,
+          "valid_sentences": 709,
+          "is_critical": true
+        },
+        {
+          "language": "es",
+          "pipeline": "atomic",
+          "perturbation": "alteration",
+          "avg_f1": 0.5370220728575571,
+          "avg_em": 0.29638664440135026,
+          "total_questions": 1717,
+          "valid_sentences": 680,
+          "is_critical": true
+        }
+      ]
+    },
+    "fr": {
+      "minor": [
+        {
+          "language": "fr",
+          "pipeline": "atomic",
+          "perturbation": "spelling",
+          "avg_f1": 0.6655533445341666,
+          "avg_em": 0.4259266848816029,
+          "total_questions": 1920,
+          "valid_sentences": 732,
+          "is_critical": false
+        },
+        {
+          "language": "fr",
+          "pipeline": "atomic",
+          "perturbation": "word_order",
+          "avg_f1": 0.6395374392889966,
+          "avg_em": 0.38899567083999065,
+          "total_questions": 1867,
+          "valid_sentences": 713,
+          "is_critical": false
+        },
+        {
+          "language": "fr",
+          "pipeline": "atomic",
+          "perturbation": "synonym",
+          "avg_f1": 0.6389073233043174,
+          "avg_em": 0.3955663856691254,
+          "total_questions": 1904,
+          "valid_sentences": 730,
+          "is_critical": false
+        },
+        {
+          "language": "fr",
+          "pipeline": "atomic",
+          "perturbation": "intensifier",
+          "avg_f1": 0.6366556911309349,
+          "avg_em": 0.3712364307034714,
+          "total_questions": 1852,
+          "valid_sentences": 713,
+          "is_critical": false
+        },
+        {
+          "language": "fr",
+          "pipeline": "atomic",
+          "perturbation": "expansion_noimpact",
+          "avg_f1": 0.6345489894066721,
+          "avg_em": 0.3708782622284732,
+          "total_questions": 1835,
+          "valid_sentences": 711,
+          "is_critical": false
+        }
+      ],
+      "critical": [
+        {
+          "language": "fr",
+          "pipeline": "atomic",
+          "perturbation": "expansion_impact",
+          "avg_f1": 0.6084616557043845,
+          "avg_em": 0.34996381670550647,
+          "total_questions": 1889,
+          "valid_sentences": 722,
+          "is_critical": true
+        },
+        {
+          "language": "fr",
+          "pipeline": "atomic",
+          "perturbation": "omission",
+          "avg_f1": 0.601701058917524,
+          "avg_em": 0.3501331767154552,
+          "total_questions": 1821,
+          "valid_sentences": 711,
+          "is_critical": true
+        },
+        {
+          "language": "fr",
+          "pipeline": "atomic",
+          "perturbation": "alteration",
+          "avg_f1": 0.5009678358623103,
+          "avg_em": 0.26773936525761344,
+          "total_questions": 1755,
+          "valid_sentences": 685,
+          "is_critical": true
+        }
+      ]
+    }
+  },
+  "summary": {
+    "minor": {
+      "avg_f1": 0.6487772077878812,
+      "avg_em": 0.3954822068928218,
+      "count": 10
+    },
+    "critical": {
+      "avg_f1": 0.5746894955364357,
+      "avg_em": 0.3271087187957491,
+      "count": 6
+    },
+    "all": {
+      "avg_f1": 0.6209943156935891,
+      "avg_em": 0.36984214885641953,
+      "count": 16
+    }
+  }
+}

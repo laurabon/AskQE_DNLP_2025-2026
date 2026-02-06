@@ -1,0 +1,55 @@
+{
+  "config": {
+    "lang": "es",
+    "pipeline": "atomic",
+    "perturbation": "alteration"
+  },
+  "summary": {
+    "avg_baseline_f1": 0.3466666666666667,
+    "avg_reasoning_f1": 0.2717171717171717,
+    "avg_delta_f1": -0.07494949494949496,
+    "num_samples": 5
+  },
+  "per_sample": [
+    {
+      "id": "CMU_1:6",
+      "baseline_f1": 0.7333333333333334,
+      "reasoning_f1": 0.13636363636363635,
+      "delta_f1": -0.596969696969697,
+      "baseline_em": 0.0,
+      "reasoning_em": 0.0
+    },
+    {
+      "id": "CMU_1:7",
+      "baseline_f1": 0.0,
+      "reasoning_f1": 0.0,
+      "delta_f1": 0.0,
+      "baseline_em": 0.0,
+      "reasoning_em": 0.0
+    },
+    {
+      "id": "CMU_1:11",
+      "baseline_f1": 0.0,
+      "reasoning_f1": 0.0,
+      "delta_f1": 0.0,
+      "baseline_em": 0.0,
+      "reasoning_em": 0.0
+    },
+    {
+      "id": "CMU_1:12",
+      "baseline_f1": 0.0,
+      "reasoning_f1": 0.22222222222222224,
+      "delta_f1": 0.22222222222222224,
+      "baseline_em": 0.0,
+      "reasoning_em": 0.0
+    },
+    {
+      "id": "CMU_1:21",
+      "baseline_f1": 1.0,
+      "reasoning_f1": 1.0,
+      "delta_f1": 0.0,
+      "baseline_em": 1.0,
+      "reasoning_em": 1.0
+    }
+  ]
+}
