@@ -55,12 +55,17 @@ def extract_entities(ner_pipeline, text):
         
         entities = []
         for entity in results:
+            # Convert numpy types to native Python types for JSON serialization
+            score = entity.get("score", 0.0)
+            if hasattr(score, 'item'):
+                score = score.item()  # numpy to python
+            
             entities.append({
                 "text": entity.get("word", ""),
                 "type": entity.get("entity_group", "UNKNOWN"),
-                "start": entity.get("start", 0),
-                "end": entity.get("end", 0),
-                "score": round(entity.get("score", 0.0), 4)
+                "start": int(entity.get("start", 0)),
+                "end": int(entity.get("end", 0)),
+                "score": round(float(score), 4)
             })
         
         return entities
