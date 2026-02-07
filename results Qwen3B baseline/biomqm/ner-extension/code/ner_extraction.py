@@ -1,7 +1,8 @@
 """
 NER Extraction Module for BioMQM
 
-Uses BioBERT for biomedical entity extraction (DISEASE, DRUG, etc.)
+Uses d4data/biomedical-ner-all for multi-entity extraction 
+(DISEASE, DRUG, SYMPTOM, GENE, etc.)
 
 Usage:
     python ner_extraction.py --input_path /path/to/data.jsonl --output_path /path/to/output.jsonl
@@ -14,8 +15,8 @@ import torch
 from transformers import AutoTokenizer, AutoModelForTokenClassification, pipeline
 
 
-# BioBERT NER model for biomedical entities
-MODEL_NAME = "alvaroalon2/biobert_diseases_ner"
+# Multi-entity biomedical NER model
+MODEL_NAME = "d4data/biomedical-ner-all"
 
 
 def load_ner_pipeline():
@@ -55,14 +56,25 @@ def extract_entities(ner_pipeline, text):
         
         entities = []
         for entity in results:
+            entity_type = entity.get("entity_group", "UNKNOWN")
+            
+            # Skip non-entity labels (O tag, or types starting with numbers)
+            if entity_type in ['O', '0', 'LABEL_0'] or entity_type.startswith('0'):
+                continue
+            
             # Convert numpy types to native Python types for JSON serialization
             score = entity.get("score", 0.0)
             if hasattr(score, 'item'):
-                score = score.item()  # numpy to python
+                score = score.item()
+            
+            # Clean up entity text (remove ## tokens)
+            entity_text = entity.get("word", "").replace("##", "").strip()
+            if not entity_text or len(entity_text) < 2:
+                continue
             
             entities.append({
-                "text": entity.get("word", ""),
-                "type": entity.get("entity_group", "UNKNOWN"),
+                "text": entity_text,
+                "type": entity_type,
                 "start": int(entity.get("start", 0)),
                 "end": int(entity.get("end", 0)),
                 "score": round(float(score), 4)
