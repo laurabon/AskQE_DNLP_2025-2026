@@ -37,6 +37,40 @@ def load_ner_pipeline():
     return ner
 
 
+def aggregate_consecutive_entities(entities):
+    """
+    Aggregate consecutive entities of the same type.
+    
+    Example: "cer" + "vicofacial" (both Detailed_description) -> "cervicofacial"
+    """
+    if not entities:
+        return []
+    
+    # Sort by start position
+    entities = sorted(entities, key=lambda x: x['start'])
+    
+    aggregated = []
+    current = entities[0].copy()
+    
+    for next_entity in entities[1:]:
+        # Check if consecutive (end == start or end+1 == start) and same type
+        if (next_entity['start'] <= current['end'] + 1 and 
+            next_entity['type'] == current['type']):
+            # Merge: extend text and end position
+            current['text'] = current['text'] + next_entity['text']
+            current['end'] = next_entity['end']
+            # Keep average score
+            current['score'] = round((current['score'] + next_entity['score']) / 2, 4)
+        else:
+            aggregated.append(current)
+            current = next_entity.copy()
+    
+    # Don't forget the last one
+    aggregated.append(current)
+    
+    return aggregated
+
+
 def extract_entities(ner_pipeline, text):
     """
     Extract entities from text.
@@ -79,6 +113,9 @@ def extract_entities(ner_pipeline, text):
                 "end": int(entity.get("end", 0)),
                 "score": round(float(score), 4)
             })
+        
+        # Aggregate consecutive entities of the same type
+        entities = aggregate_consecutive_entities(entities)
         
         return entities
         
