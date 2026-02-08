@@ -82,15 +82,20 @@ def generate_single_answer(tokenizer, model, device, sentence, question, is_bt=F
         {"role": "user", "content": prompt},
     ]
     
-    input_ids = tokenizer.apply_chat_template(
+    # Use 2-step tokenization for robustness: template -> string -> tokenizer
+    text = tokenizer.apply_chat_template(
         messages,
-        add_generation_prompt=True,
-        return_tensors="pt",
-    ).to(device)
+        tokenize=False,
+        add_generation_prompt=True
+    )
+    
+    # Tokenize the formatted string
+    model_inputs = tokenizer([text], return_tensors="pt").to(device)
     
     with torch.no_grad():
+        # Unpack model_inputs (contains input_ids and attention_mask)
         outputs = model.generate(
-            input_ids,
+            **model_inputs,
             max_new_tokens=256,
             temperature=0.1,
             top_p=0.9,
