@@ -103,7 +103,7 @@ def generate_single_answer(tokenizer, model, device, sentence, question, is_bt=F
             do_sample=True,
         )
     
-    response = outputs[0][input_ids.shape[-1]:]
+    response = outputs[0][model_inputs.input_ids.shape[-1]:]
     answer = tokenizer.decode(response, skip_special_tokens=True)
     
     if answer:
