@@ -262,6 +262,10 @@ def process_bt_qa(tokenizer, model, device, qg_file, output_file, lang):
             if key in processed_keys:
                 continue
             
+            if limit and i >= limit:
+                print(f"Limit of {limit} reached. Stopping.")
+                break
+            
             questions = parse_questions(data['questions'])
             print(f"[{i+1}/{len(unique_bt)}] Processing bt for {lang} with {len(questions)} questions...")
             
@@ -300,6 +304,8 @@ def main():
                         help="Path to QG input file")
     parser.add_argument("--output_path", type=str, required=True,
                         help="Output path for results")
+    parser.add_argument("--limit", type=int, default=None,
+                        help="Limit number of items to process (for testing)")
     args = parser.parse_args()
     
     if args.mode == "bt" and not args.lang:
@@ -314,6 +320,8 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
     print(f"Pipeline: {args.pipeline}")
+    if args.limit:
+        print(f"TEST MODE: limiting to {args.limit} items")
     print(f"Generation params: temperature=0.1, top_p=0.9, repetition_penalty=1.1")
     
     tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -327,12 +335,12 @@ def main():
     if args.mode == "source":
         print("\n=== SOURCE QA (Direct Prompting) ===")
         print("Using source prompt (no error warning)")
-        process_source_qa(tokenizer, model, device, args.qg_input_path, args.output_path)
+        process_source_qa(tokenizer, model, device, args.qg_input_path, args.output_path, limit=args.limit)
     
     elif args.mode == "bt":
         print(f"\n=== BT QA for {args.lang} (Direct Prompting) ===")
         print("Using bt prompt (with error warning)")
-        process_bt_qa(tokenizer, model, device, args.qg_input_path, args.output_path, args.lang)
+        process_bt_qa(tokenizer, model, device, args.qg_input_path, args.output_path, args.lang, limit=args.limit)
 
 
 if __name__ == "__main__":
